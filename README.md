@@ -1,5 +1,7 @@
 # Diabetes Hospital Readmission Prediction
 
+🚀 **Live demo:** [Try the app](https://njsq2g7jm5yc5qzdv39x4s.streamlit.app/)
+
 Predict whether a diabetic patient will be readmitted to hospital within
 30 days of discharge — from 101,766 real encounters in 130 US hospitals
 (1999–2008) — and be honest about how hard this problem is.
