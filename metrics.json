@@ -1,0 +1,259 @@
+{
+  "dataset": {
+    "name": "Diabetes 130-US Hospitals, 1999-2008 (UCI #296, Strack et al. 2014)",
+    "canonical_source": "https://archive.ics.uci.edu/dataset/296/diabetes+130-us+hospitals+for+years+1999-2008",
+    "mirror_used": "https://archive.ics.uci.edu/static/public/296/diabetes+130-us+hospitals+for+years+1999-2008.zip",
+    "licence": "CC BY 4.0",
+    "rows_used": 101766,
+    "columns": 50,
+    "encounters": 101766,
+    "unique_patients": 71518,
+    "target": "readmitted within 30 days (binary: <30 vs rest)",
+    "class_counts": {
+      "NO": 54864,
+      ">30": 35545,
+      "<30": 11357
+    },
+    "positive_rate": 0.1123,
+    "split": "stratified 80/20, random_state=42",
+    "train_rows": 79593,
+    "test_rows": 19899,
+    "source_used": "full",
+    "cleaning": {
+      "dropped_columns": [
+        "encounter_id",
+        "patient_nbr",
+        "weight (96.9% missing)",
+        "payer_code (39.6% missing)",
+        "medical_specialty (49.1% missing)"
+      ],
+      "dropped_rows": "3 rows gender Unknown/Invalid; rows with missing race (2.2%)",
+      "medications": "24 med features -> binary used (any of Steady/Up/Down)",
+      "diagnoses": "diag_1/2/3 ICD-9 grouped into diabetes/circulatory/respiratory/digestive/injury/genitourinary/neoplasms/other/missing",
+      "age": "bracket midpoint, numeric",
+      "note": "Same patient can appear in multiple encounters (101,766 encounters, 71,518 patients); encounters treated as independent rows."
+    }
+  },
+  "results": {
+    "Logistic Regression": {
+      "accuracy": 0.6703,
+      "precision_positive": 0.1783,
+      "recall_positive": 0.5367,
+      "f1_positive": 0.2677,
+      "roc_auc": 0.6635,
+      "brier": 0.2269,
+      "confusion_matrix": [
+        [
+          12139,
+          5526
+        ],
+        [
+          1035,
+          1199
+        ]
+      ]
+    },
+    "XGBoost": {
+      "accuracy": 0.6676,
+      "precision_positive": 0.1805,
+      "recall_positive": 0.5537,
+      "f1_positive": 0.2722,
+      "roc_auc": 0.6683,
+      "brier": 0.214,
+      "confusion_matrix": [
+        [
+          12047,
+          5618
+        ],
+        [
+          997,
+          1237
+        ]
+      ]
+    },
+    "LightGBM": {
+      "accuracy": 0.6732,
+      "precision_positive": 0.1794,
+      "recall_positive": 0.5345,
+      "f1_positive": 0.2686,
+      "roc_auc": 0.6626,
+      "brier": 0.21,
+      "confusion_matrix": [
+        [
+          12202,
+          5463
+        ],
+        [
+          1040,
+          1194
+        ]
+      ]
+    },
+    "Majority-class baseline": {
+      "accuracy": 0.8877,
+      "precision_positive": 0.0,
+      "recall_positive": 0.0,
+      "f1_positive": 0.0,
+      "roc_auc": 0.5,
+      "brier": 0.1123,
+      "confusion_matrix": [
+        [
+          17665,
+          0
+        ],
+        [
+          2234,
+          0
+        ]
+      ]
+    }
+  },
+  "best_model_by_roc_auc": "XGBoost",
+  "fairness_best_model": {
+    "age": {
+      "[10-20)": {
+        "n": 139,
+        "positive_rate": 0.0504,
+        "recall_positive": 0.2857,
+        "roc_auc": 0.7554
+      },
+      "[20-30)": {
+        "n": 304,
+        "positive_rate": 0.1513,
+        "recall_positive": 0.7391,
+        "roc_auc": 0.8085
+      },
+      "[30-40)": {
+        "n": 750,
+        "positive_rate": 0.1147,
+        "recall_positive": 0.5233,
+        "roc_auc": 0.7013
+      },
+      "[40-50)": {
+        "n": 1908,
+        "positive_rate": 0.1022,
+        "recall_positive": 0.5026,
+        "roc_auc": 0.6697
+      },
+      "[50-60)": {
+        "n": 3343,
+        "positive_rate": 0.0903,
+        "recall_positive": 0.5298,
+        "roc_auc": 0.6889
+      },
+      "[60-70)": {
+        "n": 4412,
+        "positive_rate": 0.1088,
+        "recall_positive": 0.5271,
+        "roc_auc": 0.6516
+      },
+      "[70-80)": {
+        "n": 5092,
+        "positive_rate": 0.1229,
+        "recall_positive": 0.5847,
+        "roc_auc": 0.6688
+      },
+      "[80-90)": {
+        "n": 3344,
+        "positive_rate": 0.1271,
+        "recall_positive": 0.5788,
+        "roc_auc": 0.6107
+      },
+      "[90-100)": {
+        "n": 574,
+        "positive_rate": 0.1167,
+        "recall_positive": 0.4925,
+        "roc_auc": 0.6275
+      }
+    },
+    "race": {
+      "AfricanAmerican": {
+        "n": 3835,
+        "positive_rate": 0.103,
+        "recall_positive": 0.5291,
+        "roc_auc": 0.6483
+      },
+      "Asian": {
+        "n": 130,
+        "positive_rate": 0.0846,
+        "recall_positive": 0.7273,
+        "roc_auc": 0.8602
+      },
+      "Caucasian": {
+        "n": 15228,
+        "positive_rate": 0.1153,
+        "recall_positive": 0.5644,
+        "roc_auc": 0.6731
+      },
+      "Hispanic": {
+        "n": 397,
+        "positive_rate": 0.1008,
+        "recall_positive": 0.475,
+        "roc_auc": 0.65
+      },
+      "Other": {
+        "n": 309,
+        "positive_rate": 0.1036,
+        "recall_positive": 0.3125,
+        "roc_auc": 0.6264
+      }
+    },
+    "gender": {
+      "Female": {
+        "n": 10661,
+        "positive_rate": 0.1166,
+        "recall_positive": 0.5607,
+        "roc_auc": 0.6719
+      },
+      "Male": {
+        "n": 9238,
+        "positive_rate": 0.1073,
+        "recall_positive": 0.5449,
+        "roc_auc": 0.6642
+      }
+    }
+  },
+  "shap_top10": [
+    {
+      "feature": "number_inpatient",
+      "mean_abs_shap": 0.3091
+    },
+    {
+      "feature": "discharge_disposition_id_11",
+      "mean_abs_shap": 0.1786
+    },
+    {
+      "feature": "discharge_disposition_id_1",
+      "mean_abs_shap": 0.1596
+    },
+    {
+      "feature": "number_diagnoses",
+      "mean_abs_shap": 0.0715
+    },
+    {
+      "feature": "num_medications",
+      "mean_abs_shap": 0.0666
+    },
+    {
+      "feature": "diag_1_circulatory",
+      "mean_abs_shap": 0.0595
+    },
+    {
+      "feature": "diabetesMed",
+      "mean_abs_shap": 0.0578
+    },
+    {
+      "feature": "time_in_hospital",
+      "mean_abs_shap": 0.0528
+    },
+    {
+      "feature": "age",
+      "mean_abs_shap": 0.0486
+    },
+    {
+      "feature": "num_lab_procedures",
+      "mean_abs_shap": 0.0475
+    }
+  ],
+  "shap_model": "XGBoost"
+}
