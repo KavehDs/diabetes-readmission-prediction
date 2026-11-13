@@ -20,6 +20,14 @@ from lightgbm import LGBMClassifier  # noqa: E402
 
 st.set_page_config(page_title="Readmission risk — diabetes", layout="centered")
 st.title("Hospital readmission within 30 days?")
+# Sliders must stay left-to-right even in RTL browsers (e.g. Persian):
+# without this fix, dragging the thumb right decreases the value.
+st.markdown(
+    """<style>
+    [data-testid="stSlider"] { direction: ltr !important; }
+    </style>""",
+    unsafe_allow_html=True,
+)
 st.warning(
     "Educational portfolio demo on historical hospital data — "
     "not a medical decision tool. The model is weak by design: "
